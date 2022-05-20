@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyFigmaTheme {
-                ShowCardBox(Card("Title", "UA 000000000000000", "11 500 500.00", "UA"))
+                ShowCardColumn(Card("Title", "UA 000000000000000", "11 500 500.00", "UA"))
 
             }
         }
@@ -186,65 +186,80 @@ fun ShowCardColumn(card: Card) {
             .padding(16.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
+        Column(verticalArrangement = Arrangement.Top
         ) {
-
             Row(
-                modifier = Modifier.padding(0.dp, 0.dp, 56.dp, 0.dp),
-                verticalAlignment = Alignment.CenterVertically
+                horizontalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxWidth()
             ) {
-                Text(
-                    text = card.title,
-                    modifier = Modifier.padding(0.dp, 0.dp, 8.dp, 0.dp),
-                    style = TextStyle(fontSize = 15.sp)
-                )
+                Row(
+                    modifier = Modifier.padding(
+                        start = 0.dp,
+                        top = 0.dp,
+                        end = 56.dp,
+                        bottom = 0.dp
+                    ),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = card.title,
+                        modifier = Modifier.padding(
+                            start = 0.dp,
+                            top = 0.dp,
+                            end = 8.dp,
+                            bottom = 0.dp
+                        ),
+                        style = TextStyle(fontSize = 15.sp)
+                    )
+                    Image(
+                        painter = painterResource(R.drawable.edit),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(12.dp)
+                    )
+                }
+
                 Image(
-                    painter = painterResource(R.drawable.edit),
+                    painter = painterResource(R.drawable.wallet),
                     contentDescription = null,
                     modifier = Modifier
-                        .size(12.dp)
+                        .size(width = 24.dp, height = 24.dp)
                 )
             }
 
-            Image(
-                painter = painterResource(R.drawable.wallet),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(width = 24.dp, height = 24.dp)
-            )
-        }
-
-        Text(
-            text = card.id,
-            style = TextStyle(fontSize = 14.sp)
-            //modifier = Modifier.padding(0.dp, 24.dp)
-        )
-        Text(
-            text = card.defaultText,
-            style = TextStyle(fontSize = 10.sp)
-            //modifier = Modifier.padding(0.dp, 104.dp, 0.dp, 32.dp)
-        )
-
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Image(
-                painter = painterResource(R.drawable.star),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(width = 24.dp, height = 24.dp)
-            )
             Text(
-                text = card.balance,
-                style = TextStyle(fontSize = 24.sp),
-                modifier = Modifier.padding(32.dp, 0.dp, 0.dp, 0.dp)
+                text = card.id,
+                style = TextStyle(fontSize = 14.sp)
             )
         }
-
+        Column(verticalArrangement = Arrangement.Bottom) {
+            Text(
+                text = card.defaultText,
+                style = TextStyle(fontSize = 10.sp)
+            )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.star),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(width = 24.dp, height = 24.dp)
+                )
+                Text(
+                    text = card.balance,
+                    style = TextStyle(fontSize = 24.sp),
+                    modifier = Modifier.padding(
+                        start = 32.dp,
+                        top = 0.dp,
+                        end = 0.dp,
+                        bottom = 0.dp
+                    )
+                )
+            }
+        }
     }
 }
 
@@ -252,8 +267,8 @@ fun ShowCardColumn(card: Card) {
 @Composable
 fun DefaultPreview() {
     MyFigmaTheme {
-        ShowCardBox(Card("Title", "UA 000000000000000", "По умолчанию", "11 500 500.00 UAH"))
-        //ShowCardColumn(Card("Title", "UA 000000000000000", "По умолчанию", "11 500 500.00 UAH"))
+        //ShowCardBox(Card("Title", "UA 000000000000000", "По умолчанию", "11 500 500.00 UAH"))
+        ShowCardColumn(Card("Title", "UA 000000000000000", "По умолчанию", "11 500 500.00 UAH"))
     }
 }
 
