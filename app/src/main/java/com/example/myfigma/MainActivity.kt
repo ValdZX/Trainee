@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyFigmaTheme {
-                    ShowCardBox(Card("Title", "UA 000000000000000", "11 500 500.00", "UA"))
+                ShowCardBox(Card("Title", "UA 000000000000000", "11 500 500.00", "UA"))
 
             }
         }
@@ -46,23 +46,27 @@ data class Card(val title: String, val id: String, val defaultText: String, val 
 @Composable
 fun ShowCard(card: Card) {
 
-    Box(contentAlignment = Alignment.Center ) {
+    Box(contentAlignment = Alignment.Center) {
         Surface(
             shape = MaterialTheme.shapes.medium
         ) {
-            Column(modifier = Modifier
-                .padding(16.dp)
-                .background(
-                    brush = Brush.verticalGradient(
-                        colors = listOf(
-                            colorResource(R.color.card_bg_start),
-                            colorResource(R.color.card_bg_finish)
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                colorResource(R.color.card_bg_start),
+                                colorResource(R.color.card_bg_finish)
+                            )
                         )
                     )
-                )
-                .padding(16.dp)) {
-                Row(modifier = Modifier.padding(all = 16.dp),
-                verticalAlignment = Alignment.CenterVertically) {
+                    .padding(16.dp)
+            ) {
+                Row(
+                    modifier = Modifier.padding(all = 16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     Text(
                         text = card.title,
                         //modifier = Modifier.padding(all = 16.dp),
@@ -81,7 +85,7 @@ fun ShowCard(card: Card) {
                         painter = painterResource(R.drawable.wallet),
                         contentDescription = null,
                         modifier = Modifier
-                            .size(width = 22.08.dp,height = 18.24.dp)
+                            .size(width = 22.08.dp, height = 18.24.dp)
                     )
 
                 }
@@ -92,7 +96,6 @@ fun ShowCard(card: Card) {
                 Spacer(modifier = Modifier.width(4.dp))
 
 
-
             }
         }
 
@@ -100,86 +103,101 @@ fun ShowCard(card: Card) {
 }
 
 @Composable
-fun ShowCardBox(card: Card){
-    Box(modifier = Modifier
-        .size(width = 312.dp, height = 184.dp)
-        .clip(RoundedCornerShape(14.dp))
-        .background(
-            brush = Brush.verticalGradient(
-                colors = listOf(
-                    colorResource(R.color.card_bg_start),
-                    colorResource(R.color.card_bg_finish)
+fun ShowCardBox(card: Card) {
+    Box(
+        modifier = Modifier
+            .size(width = 312.dp, height = 184.dp)
+            .clip(RoundedCornerShape(14.dp))
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        colorResource(R.color.card_bg_start),
+                        colorResource(R.color.card_bg_finish)
+                    )
                 )
             )
-        )
-        .padding(16.dp))
+            .padding(16.dp)
+    )
     {
-        Row(modifier = Modifier.padding(0.dp,0.dp,56.dp,0.dp),
-            horizontalArrangement = Arrangement.Start,
-            verticalAlignment = Alignment.CenterVertically){
-        Text(
-            text = card.title,
-            modifier = Modifier.padding(0.dp,0.dp,8.dp,0.dp),
-            style = TextStyle(fontSize = 15.sp)
-        )
-        Image(
-            painter = painterResource(R.drawable.edit),
-            contentDescription = null,
-            modifier = Modifier
-                .size(12.dp)
-        )
+        Row(
+            modifier = Modifier.padding(0.dp, 0.dp, 56.dp, 0.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = card.title,
+                modifier = Modifier.padding(start = 0.dp, top = 0.dp, end = 8.dp, bottom = 0.dp),
+                style = TextStyle(fontSize = 15.sp)
+            )
+            Image(
+                painter = painterResource(R.drawable.edit),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(12.dp)
+            )
         }
         Image(
             painter = painterResource(R.drawable.wallet),
             contentDescription = null,
             modifier = Modifier
-                .padding(256.dp, 0.dp, 0.dp, 0.dp)
-                .size(width = 24.dp, height = 24.dp),
-            alignment = Alignment.TopEnd
+                .size(width = 24.dp, height = 24.dp)
+                .align(alignment = Alignment.TopEnd)
         )
-        Text(text = card.id,
+        Text(
+            text = card.id,
             style = TextStyle(fontSize = 14.sp),
-            modifier = Modifier.padding(0.dp,24.dp)
+            modifier = Modifier.padding(horizontal = 0.dp, vertical = 24.dp)
         )
-        Text(text = card.defaultText,
+        Text(
+            text = card.defaultText,
             style = TextStyle(fontSize = 10.sp),
-            modifier = Modifier.padding(0.dp,104.dp,0.dp,32.dp)
+            modifier = Modifier.padding(start = 0.dp, top = 104.dp, end = 0.dp, bottom = 32.dp)
         )
         Image(
             painter = painterResource(R.drawable.star),
             contentDescription = null,
             modifier = Modifier
-                .padding(0.dp, 128.dp, 0.dp, 0.dp)
                 .size(width = 24.dp, height = 24.dp)
+                .align(alignment = Alignment.BottomStart)
         )
-        Text(text = card.balance,
+        Text(
+            text = card.balance,
             style = TextStyle(fontSize = 24.sp),
-            modifier = Modifier.padding(32.dp,126.dp,0.dp,0.dp))
+            modifier = Modifier
+                .align(alignment = Alignment.BottomEnd)
+                .padding(32.dp, 0.dp, 0.dp, 0.dp)
+        )
     }
 }
 
 @Composable
-fun ShowCardColumn(card: Card){
-    Column(modifier = Modifier
-        .size(width = 312.dp, height = 184.dp)
-        .clip(RoundedCornerShape(14.dp))
-        .background(
-            brush = Brush.verticalGradient(
-                colors = listOf(
-                    colorResource(R.color.card_bg_start),
-                    colorResource(R.color.card_bg_finish)
+fun ShowCardColumn(card: Card) {
+    Column(
+        modifier = Modifier
+            .size(width = 312.dp, height = 184.dp)
+            .clip(RoundedCornerShape(14.dp))
+            .background(
+                brush = Brush.verticalGradient(
+                    colors = listOf(
+                        colorResource(R.color.card_bg_start),
+                        colorResource(R.color.card_bg_finish)
+                    )
                 )
             )
-        )
-        .padding(16.dp),
-    verticalArrangement = Arrangement.SpaceBetween
+            .padding(16.dp),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
-            Row(modifier = Modifier.padding(0.dp,0.dp,56.dp,0.dp),
-                horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically){
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+
+            Row(
+                modifier = Modifier.padding(0.dp, 0.dp, 56.dp, 0.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(
                     text = card.title,
-                    modifier = Modifier.padding(0.dp,0.dp,8.dp,0.dp),
+                    modifier = Modifier.padding(0.dp, 0.dp, 8.dp, 0.dp),
                     style = TextStyle(fontSize = 15.sp)
                 )
                 Image(
@@ -189,49 +207,42 @@ fun ShowCardColumn(card: Card){
                         .size(12.dp)
                 )
             }
-            Row(modifier = Modifier.padding(256.dp, 0.dp, 0.dp, 0.dp),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.Top) {
-                Image(
-                    painter = painterResource(R.drawable.wallet),
-                    contentDescription = null,
-                    modifier = Modifier
-                        //.padding(256.dp, 0.dp, 0.dp, 0.dp)
-                        .size(width = 24.dp, height = 24.dp)
-                    //alignment = Alignment.TopEnd
-                )
-            }
 
+            Image(
+                painter = painterResource(R.drawable.wallet),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(width = 24.dp, height = 24.dp)
+            )
+        }
 
+        Text(
+            text = card.id,
+            style = TextStyle(fontSize = 14.sp)
+            //modifier = Modifier.padding(0.dp, 24.dp)
+        )
+        Text(
+            text = card.defaultText,
+            style = TextStyle(fontSize = 10.sp)
+            //modifier = Modifier.padding(0.dp, 104.dp, 0.dp, 32.dp)
+        )
 
-//        Row() {
-//            Text(text = card.id,
-//                style = TextStyle(fontSize = 14.sp),
-//                modifier = Modifier.padding(0.dp,24.dp)
-//            )
-//        }
-//        Row() {
-//            Text(text = card.defaultText,
-//                style = TextStyle(fontSize = 10.sp),
-//                modifier = Modifier.padding(0.dp,104.dp,0.dp,32.dp)
-//            )
-//        }
-
-        Row(modifier = Modifier.padding(0.dp,0.dp,128.dp,0.dp),
+        Row(
+            modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.Bottom) {
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             Image(
                 painter = painterResource(R.drawable.star),
                 contentDescription = null,
                 modifier = Modifier
                     .size(width = 24.dp, height = 24.dp)
             )
-            Text(text = card.balance,
+            Text(
+                text = card.balance,
                 style = TextStyle(fontSize = 24.sp),
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(32.dp, 0.dp, 0.dp, 0.dp)
-                    )
+                modifier = Modifier.padding(32.dp, 0.dp, 0.dp, 0.dp)
+            )
         }
 
     }
@@ -241,8 +252,8 @@ fun ShowCardColumn(card: Card){
 @Composable
 fun DefaultPreview() {
     MyFigmaTheme {
-        //ShowCardBox(Card("Title", "UA 000000000000000", "По умолчанию", "11 500 500.00 UAH"))
-        ShowCardColumn(Card("Title", "UA 000000000000000", "По умолчанию", "11 500 500.00 UAH"))
+        ShowCardBox(Card("Title", "UA 000000000000000", "По умолчанию", "11 500 500.00 UAH"))
+        //ShowCardColumn(Card("Title", "UA 000000000000000", "По умолчанию", "11 500 500.00 UAH"))
     }
 }
 
