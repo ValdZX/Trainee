@@ -17,7 +17,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.DefaultAlpha
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
@@ -55,20 +57,26 @@ fun ShowCard(card: Card) {
                         )
                     )
                 )) {
-                Row() {
+                Row(modifier = Modifier.padding(all = 16.dp)) {
                     Text(
                         text = card.title,
-                        modifier = Modifier.padding(all = 16.dp),
+                        //modifier = Modifier.padding(all = 16.dp),
                         style = TextStyle(fontSize = 15.sp)
                     )
                     Image(
                         painter = painterResource(R.drawable.body_clarification_edit),
                         contentDescription = null,
-                        //alpha = DefaultAlpha,
                         modifier = Modifier
                             .size(12.dp)
-                            .padding(all = 16.dp)
                     )
+
+                    Image(
+                        painter = painterResource(R.drawable.vector),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(width = 22.08.dp,height = 18.24.dp)
+                    )
+
                 }
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(text = card.id)
