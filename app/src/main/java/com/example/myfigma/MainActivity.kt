@@ -63,13 +63,15 @@ fun ShowCard(card: Card) {
                         //modifier = Modifier.padding(all = 16.dp),
                         style = TextStyle(fontSize = 15.sp)
                     )
+                    Spacer(modifier = Modifier.width(10.dp))
                     Image(
                         painter = painterResource(R.drawable.body_clarification_edit),
                         contentDescription = null,
+                        alignment = Alignment.BottomCenter,
                         modifier = Modifier
                             .size(12.dp)
                     )
-
+                    Spacer(modifier = Modifier.width(203.96.dp))
                     Image(
                         painter = painterResource(R.drawable.vector),
                         contentDescription = null,
