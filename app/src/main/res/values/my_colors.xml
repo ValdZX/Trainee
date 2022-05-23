@@ -6,4 +6,5 @@
     <color name="secondary">#2E66AC</color>
     <color name="primary">#4BC4B6</color>
     <color name="my_background">#E5E5E5</color>
+    <color name="background_sheet">#F6F6F6</color>
 </resources>

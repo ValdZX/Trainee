@@ -1,7 +1,6 @@
 package com.example.myfigma
 
 import android.os.Bundle
-import android.widget.ImageButton
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
@@ -9,13 +8,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -24,26 +20,43 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myfigma.ui.theme.MyFigmaTheme
 import androidx.constraintlayout.compose.ConstraintLayout
-
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val buttonsList: List<MyButton> = listOf(MyButton("Платежи",R.drawable.data_transfer), MyButton("Выписка",R.drawable.check))
+        val buttonsList: List<MyButton> = listOf(
+            MyButton("Платежи", R.drawable.data_transfer),
+            MyButton("Выписка", R.drawable.check)
+        )
         setContent {
             MyFigmaTheme {
-                MyHeader()
-                ShowCardConstraint(Card("Title", "UA 000000000000000", "11 500 500.00", "UA"))
-                //ShowButtonsAll(Buttons("Платежи", "Выписка"))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
+                Column(
+                    modifier = Modifier.background(colorResource(R.color.my_background)),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    for (item in buttonsList) {
-                        ShowButton(button = item)
+                    MyHeader()
+                    ShowCardConstraint(
+                        Card(
+                            "Title",
+                            "UA 000000000000000",
+                            "По умолчанию",
+                            "11 500 500.00 UA"
+                        )
+                    )
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        for (item in buttonsList) {
+                            ShowButton(button = item)
+                        }
                     }
                 }
-
             }
         }
     }
@@ -257,6 +270,7 @@ fun ShowCardColumn(card: Card) {
 fun ShowCardConstraint(card: Card) {
     ConstraintLayout(
         modifier = Modifier
+            .padding(16.dp)
             .size(width = 312.dp, height = 184.dp)
             .clip(RoundedCornerShape(14.dp))
             .background(
@@ -368,10 +382,12 @@ fun ShowButtonsAll(buttons: Buttons) {
 //                )
 //            }
 
-            Box(modifier = Modifier
-                .size(width = 50.dp, height = 50.dp)
-                .clip(RoundedCornerShape(8.dp))
-                .background(colorResource(R.color.secondary))) {
+            Box(
+                modifier = Modifier
+                    .size(width = 50.dp, height = 50.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(colorResource(R.color.secondary))
+            ) {
                 Image(
                     painter = painterResource(R.drawable.data_transfer),
                     contentDescription = null,
@@ -398,10 +414,12 @@ fun ShowButtonsAll(buttons: Buttons) {
                 .clickable { /* Do something! */ },
             verticalArrangement = Arrangement.Top
         ) {
-            Box(modifier = Modifier
-                .size(width = 50.dp, height = 50.dp)
-                .clip(RoundedCornerShape(8.dp))
-                .background(colorResource(R.color.secondary))) {
+            Box(
+                modifier = Modifier
+                    .size(width = 50.dp, height = 50.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .background(colorResource(R.color.secondary))
+            ) {
                 Image(
                     painter = painterResource(R.drawable.check),
                     contentDescription = null,
@@ -428,58 +446,112 @@ fun ShowButtonsAll(buttons: Buttons) {
 @Composable
 fun ShowButton(button: MyButton) {
 
-        Column(
-            modifier = Modifier
-                .size(width = 88.dp, height = 88.dp)
-                .clickable { /* Do something! */ },
-            verticalArrangement = Arrangement.Top
-        ) {
+    Column(
+        modifier = Modifier
+            .size(width = 88.dp, height = 88.dp)
+            .clickable { /* Do something! */ },
+        verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
 
-            Box(modifier = Modifier
+        Box(
+            modifier = Modifier
                 .size(width = 50.dp, height = 50.dp)
                 .clip(RoundedCornerShape(8.dp))
-                .background(colorResource(R.color.secondary))) {
-                Image(
-                    painter = painterResource(button.img),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(24.dp)
-                        .fillMaxSize()
-                        .align(alignment = Alignment.Center)
-                )
-            }
-            Text(
-                text = button.title,
-                style = TextStyle(fontSize = 13.sp),
-                modifier = Modifier.padding(
-                    start = 0.dp,
-                    top = 6.dp,
-                    end = 0.dp,
-                    bottom = 0.dp
-                )
+                .background(colorResource(R.color.secondary))
+        ) {
+            Image(
+                painter = painterResource(button.img),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(24.dp)
+                    .fillMaxSize()
+                    .align(alignment = Alignment.Center)
             )
+        }
+        Text(
+            text = button.title,
+            style = TextStyle(fontSize = 13.sp),
+            modifier = Modifier.padding(
+                start = 0.dp,
+                top = 6.dp,
+                end = 0.dp,
+                bottom = 0.dp
+            )
+        )
     }
 }
 
+data class TransactionItem(val icon: Int, val title: String, val iban: String, val attention: String, val sum: String)
+
+@Composable
+fun BottomSheetListItem(transactionItem: TransactionItem, onItemClick: (String) -> Unit) {
+    ConstraintLayout(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = { onItemClick(transactionItem.title) })
+            .height(88.dp)
+            .background(color = colorResource(id = R.color.background_sheet))
+            .padding(all = 16.dp)
+    ) {
+        val (icon, title, iban, attention, sum) = createRefs()
+        Image(painter = painterResource(id = transactionItem.icon),
+            contentDescription = "",
+            modifier = Modifier
+                .size(24.dp)
+                .constrainAs(icon) {})
+        Text(text = transactionItem.title,
+            style = TextStyle(fontSize = 15.sp),
+            modifier = Modifier
+                .constrainAs(title) {
+                    top.linkTo(parent.top)
+                    start.linkTo(icon.end)
+                })
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun BottomSheetListItemPreview() {
+    BottomSheetListItem(TransactionItem(R.drawable.swift,"SWIFT - платёж", "UA 85 399622 0000026205500011673","Ошибка перевода","-100.00 UAH"), onItemClick = { })
+}
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyFigmaTheme {
         //MyHeader()
-
         //ShowCardBox(Card("Title", "UA 000000000000000", "По умолчанию", "11 500 500.00 UAH"))
         //ShowCardColumn(Card("Title", "UA 000000000000000", "По умолчанию", "11 500 500.00 UAH"))
         //ShowCardConstraint(Card("Title", "UA 000000000000000", "По умолчанию", "11 500 500.00 UAH"))
-
         //ShowButtonsAll(Buttons("Платежи", "Выписка"))
-        val buttonsList: List<MyButton> = listOf(MyButton("Платежи",R.drawable.data_transfer), MyButton("Выписка",R.drawable.check))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+
+        val buttonsList: List<MyButton> = listOf(
+            MyButton("Платежи", R.drawable.data_transfer),
+            MyButton("Выписка", R.drawable.check)
+        )
+        Column(
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            for (item in buttonsList) {
-                ShowButton(button = item)
+            MyHeader()
+            ShowCardConstraint(
+                Card(
+                    "Title",
+                    "UA 000000000000000",
+                    "По умолчанию",
+                    "11 500 500.00 UA"
+                )
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.Center
+            ) {
+                for (item in buttonsList) {
+                    ShowButton(button = item)
+                }
             }
         }
     }
