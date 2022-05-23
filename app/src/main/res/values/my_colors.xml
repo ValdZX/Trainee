@@ -2,4 +2,7 @@
 <resources>
     <color name="card_bg_start">#8DC6A0</color>
     <color name="card_bg_finish">#52BEEE</color>
+    <color name="surface">#F6F6F6</color>
+    <color name="secondary">#2E66AC</color>
+    <color name="primary">#4BC4B6</color>
 </resources>
