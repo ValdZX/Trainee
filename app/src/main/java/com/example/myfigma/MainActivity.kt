@@ -3,10 +3,12 @@ package com.example.myfigma
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.ui.Alignment
@@ -30,30 +32,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             MyFigmaTheme {
-                val scaffoldState = rememberBottomSheetScaffoldState()
-                val scope = rememberCoroutineScope()
-
-                BottomSheetScaffold(
-                    scaffoldState = scaffoldState,
-                    sheetContent = {
-                        BottomSheetListItem(
-                            TransactionItem(
-                                R.drawable.swift,
-                                "SWIFT - платёж",
-                                "UA 85 399622 0000026205500011673",
-                                "Ошибка перевода",
-                                "-100.00 UAH"
-                            ), onItemClick = { })
-                    },
-                    // Defaults to BottomSheetScaffoldDefaults.SheetPeekHeight
-                    sheetPeekHeight = 276.dp
-
-                ) {
-                    // Screen content
-                    ScreenContent()
-                }
-
+                //ScreenContent()
+                SheetContent()
             }
+
         }
     }
 }
@@ -65,7 +47,7 @@ data class Buttons(val titleTransfer: String, val titleCheck: String)
 data class MyButton(val title: String, val img: Int)
 
 @Composable
-fun ScreenContent(){
+fun ScreenContent() {
     val buttonsList: List<MyButton> = listOf(
         MyButton("Платежи", R.drawable.data_transfer),
         MyButton("Выписка", R.drawable.check)
@@ -94,7 +76,7 @@ fun ScreenContent(){
                 ShowButton(button = item)
             }
         }
-        SootheBottomNavigation()
+//        SootheBottomNavigation()
     }
 }
 
@@ -520,6 +502,8 @@ data class TransactionItem(
     val sum: String
 )
 
+data class TransactionHeader(val title: String, val listTransactionItems: List<TransactionItem>)
+
 @Composable
 fun BottomSheetListItem(transactionItem: TransactionItem, onItemClick: (String) -> Unit) {
     Box(
@@ -584,6 +568,53 @@ fun BottomSheetListItem(transactionItem: TransactionItem, onItemClick: (String) 
 }
 
 @Composable
+fun BottomSheetListTopHeader() {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(50.dp)
+            .clip(
+                RoundedCornerShape(
+                    topEnd = 14.dp,
+                    topStart = 14.dp
+                )
+            )
+            .background(color = colorResource(id = R.color.background_sheet))
+            .padding(horizontal = 16.dp, vertical = 13.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = stringResource(R.string.bottom_sheet_list_top_header),
+            style = TextStyle(fontSize = 18.sp, color = colorResource(R.color.surface_selected))
+        )
+        Image(
+            painter = painterResource(R.drawable.button_search),
+            contentDescription = "",
+            modifier = Modifier
+                .size(24.dp)
+                .fillMaxSize()
+        )
+    }
+}
+
+@Composable
+fun BottomSheetListHeader(transactionHeader: TransactionHeader) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(50.dp)
+            .background(color = colorResource(id = R.color.background_sheet))
+            .padding(horizontal = 16.dp, vertical = 13.dp)
+    ) {
+        Text(
+            text = transactionHeader.title,
+            style = TextStyle(fontSize = 18.sp, color = colorResource(R.color.surface_selected))
+        )
+    }
+}
+
+@Composable
 private fun SootheBottomNavigation() {
     BottomNavigation(
         backgroundColor = colorResource(id = R.color.bottom_menu_background)
@@ -643,6 +674,116 @@ private fun SootheBottomNavigation() {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun SheetContent() {
+
+    val sectionListItemsToday = listOf(
+        TransactionItem(
+            R.drawable.transfer,
+            "Между своими счетами",
+            "UA 85 399622 0000026205500011673",
+            "",
+            "-100.00 UAH"
+        ),
+        TransactionItem(
+            R.drawable.swift,
+            "SWIFT - платёж",
+            "UA 85 399622 0000026205500011673",
+            "",
+            "-100.00 UAH"
+        ),
+        TransactionItem(
+            R.drawable.uk_territory,
+            "Платежи по Украине",
+            "UA 85 399622 0000026205500011673",
+            "",
+            "-57 870.00 UAH"
+        ),
+        TransactionItem(
+            R.drawable.transfer,
+            "Между своими счетами",
+            "UA 85 399622 0000026205500011673",
+            "Ошибка перевода",
+            "-57 870.00 UAH"
+        )
+    )
+
+    val sectionListItemsTomorrow = listOf(
+        TransactionItem(
+            R.drawable.swift,
+            "SWIFT - платёж",
+            "UA 85 399622 0000026205500011673",
+            "",
+            "-100.00 UAH"
+        ),
+        TransactionItem(
+            R.drawable.uk_territory,
+            "Платежи по Украине",
+            "UA 85 399622 0000026205500011673",
+            "",
+            "-57 870.00 UAH"
+        ),
+        TransactionItem(
+            R.drawable.swift,
+            "SWIFT - платёж",
+            "UA 85 399622 0000026205500011673",
+            "",
+            "-100.00 UAH"
+        )
+    )
+
+    val sectionListItemsSomeDay = listOf(
+        TransactionItem(
+            R.drawable.transfer,
+            "Между своими счетами",
+            "UA 85 399622 0000026205500011673",
+            "Ошибка перевода",
+            "-57 870.00 UAH"
+        ),
+        TransactionItem(
+            R.drawable.swift,
+            "SWIFT - платёж",
+            "UA 85 399622 0000026205500011673",
+            "Ошибка перевода",
+            "-100.00 UAH"
+        ),
+        TransactionItem(
+            R.drawable.transfer,
+            "Между своими счетами",
+            "UA 85 399622 0000026205500011673",
+            "Ошибка перевода",
+            "-57 870.00 UAH"
+        ),
+        TransactionItem(
+            R.drawable.uk_territory,
+            "Платежи по Украине",
+            "UA 85 399622 0000026205500011673",
+            "",
+            "-57 870.00 UAH"
+        )
+    )
+
+    val sectionHeaders = listOf(
+        TransactionHeader("Сегодня", sectionListItemsToday),
+        TransactionHeader("Вчера", sectionListItemsTomorrow),
+        TransactionHeader("19.05.2021", sectionListItemsSomeDay)
+    )
+
+    LazyColumn() {
+        stickyHeader {
+            BottomSheetListTopHeader()
+        }
+        sectionHeaders.forEach { section ->
+            item {
+                BottomSheetListHeader(section)
+            }
+            items(section.listTransactionItems.count()) {
+                BottomSheetListItem(section.listTransactionItems[it], onItemClick = { })
+            }
+        }
+    }
+}
 
 //@Preview(showBackground = true)
 //@Composable
@@ -657,34 +798,15 @@ private fun SootheBottomNavigation() {
 //        ), onItemClick = { })
 //}
 
-@OptIn(ExperimentalMaterialApi::class)
+
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyFigmaTheme {
         //ScreenContent()
-        val scaffoldState = rememberBottomSheetScaffoldState()
-        val scope = rememberCoroutineScope()
+        //SootheBottomNavigation()
 
-        BottomSheetScaffold(
-            scaffoldState = scaffoldState,
-            sheetContent = {
-                BottomSheetListItem(
-                    TransactionItem(
-                        R.drawable.swift,
-                        "SWIFT - платёж",
-                        "UA 85 399622 0000026205500011673",
-                        "Ошибка перевода",
-                        "-100.00 UAH"
-                    ), onItemClick = { })
-            },
-            // Defaults to BottomSheetScaffoldDefaults.SheetPeekHeight
-            sheetPeekHeight = 276.dp
-
-        ) {
-            // Screen content
-            ScreenContent()
-        }
+        SheetContent()
     }
 }
 
