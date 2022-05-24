@@ -3,10 +3,7 @@ package com.example.myfigma
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -25,6 +22,9 @@ import com.example.myfigma.ui.theme.MyFigmaTheme
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource
+import cafe.adriel.voyager.navigator.Navigator
+import cafe.adriel.voyager.navigator.bottomSheet.BottomSheetNavigator
+import com.example.myfigma.ui.MainScreen
 
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalMaterialApi::class)
@@ -53,7 +53,8 @@ fun ScreenContent() {
         MyButton("Выписка", R.drawable.check)
     )
     Column(
-        modifier = Modifier.background(colorResource(R.color.bottom_menu_background)),
+        modifier = Modifier.background(colorResource(R.color.bottom_menu_background))
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -674,6 +675,7 @@ private fun SootheBottomNavigation() {
     }
 }
 
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SheetContent() {
@@ -799,15 +801,21 @@ fun SheetContent() {
 //}
 
 
+@OptIn(ExperimentalMaterialApi::class)
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     MyFigmaTheme {
-        //ScreenContent()
-        //SootheBottomNavigation()
 
-        SheetContent()
+        Column(modifier = Modifier.fillMaxSize()) {
+            BottomSheetNavigator(modifier = Modifier.weight(1f)) {
+                Navigator(screen = MainScreen())
+            }
+            SootheBottomNavigation()
+        }
+
     }
 }
+
 
 

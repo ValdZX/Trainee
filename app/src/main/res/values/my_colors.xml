@@ -12,4 +12,5 @@
     <color name="on_surface">#262626</color>
     <color name="attention">#D50000</color>
     <color name="surface_selected">#D7D7D7</color>
+    <color name="divider">#DBDBDB</color>
 </resources>
