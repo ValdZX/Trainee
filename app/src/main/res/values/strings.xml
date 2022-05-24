@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">MyFigma</string>
+    <string name="bottom_navigation_home">Главная</string>
+    <string name="bottom_navigation_credit">Кредиты</string>
+    <string name="bottom_navigation_deposit">Депозиты</string>
+    <string name="bottom_navigation_settings">Еще</string>
 </resources>
