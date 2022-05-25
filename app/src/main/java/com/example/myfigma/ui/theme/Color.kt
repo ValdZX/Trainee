@@ -2,7 +2,14 @@ package com.example.myfigma.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+val CardBgStart = Color(0xFF8DC6A0)
+val CardBgFinish = Color(0xFF52BEEE)
+val Surface = Color(0xFFF6F6F6)
+val Secondary = Color(0xFF2E66AC)
+val Primary = Color(0xFF4BC4B6)
+val Background= Color(0xFFFFFFFF)
+val OnSurfaceVariant= Color(0xFF969696)
+val OnSurface= Color(0xFF262626)
+val Attention= Color(0xFFD50000)
+val SurfaceSelected= Color(0xFFD7D7D7)
+val Divider= Color(0xFFDBDBDB)

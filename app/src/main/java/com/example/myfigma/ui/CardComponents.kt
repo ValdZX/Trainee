@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -13,14 +15,17 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.example.myfigma.Card
 import com.example.myfigma.R
+import com.example.myfigma.ui.theme.CardBgFinish
+import com.example.myfigma.ui.theme.CardBgStart
 import com.example.myfigma.ui.theme.MyFigmaTheme
-
 
 @Composable
 fun ShowCardBox(card: Card) {
@@ -31,8 +36,8 @@ fun ShowCardBox(card: Card) {
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        colorResource(R.color.card_bg_start),
-                        colorResource(R.color.card_bg_finish)
+                        CardBgStart,
+                        CardBgFinish
                     )
                 )
             )
@@ -40,43 +45,50 @@ fun ShowCardBox(card: Card) {
     )
     {
         Row(
-            modifier = Modifier.padding(0.dp, 0.dp, 56.dp, 0.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
                 text = card.title,
-                modifier = Modifier.padding(start = 0.dp, top = 0.dp, end = 8.dp, bottom = 0.dp),
+                softWrap = false,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier
+                    .padding(end = 8.dp)
+                    .widthIn(0.dp, 224.dp),
                 style = TextStyle(fontSize = 15.sp)
             )
             Image(
                 painter = painterResource(R.drawable.edit),
-                contentDescription = null,
-                modifier = Modifier
-                    .size(12.dp)
+                contentDescription = null
             )
         }
         Image(
             painter = painterResource(R.drawable.wallet),
             contentDescription = null,
             modifier = Modifier
-                .size(width = 24.dp, height = 24.dp)
                 .align(alignment = Alignment.TopEnd)
         )
         Text(
             text = card.id,
+            softWrap = false,
+            overflow = TextOverflow.Ellipsis,
             style = TextStyle(fontSize = 14.sp),
-            modifier = Modifier.padding(horizontal = 0.dp, vertical = 24.dp)
+            modifier = Modifier
+                .padding(vertical = 24.dp)
+                .widthIn(0.dp, 280.dp),
         )
         Text(
             text = card.defaultText,
+            softWrap = false,
+            overflow = TextOverflow.Ellipsis,
             style = TextStyle(fontSize = 10.sp),
-            modifier = Modifier.padding(start = 0.dp, top = 104.dp, end = 0.dp, bottom = 32.dp)
+            modifier = Modifier
+                .padding(top = 104.dp, bottom = 32.dp)
+                .widthIn(0.dp, 224.dp),
         )
         Image(
             painter = painterResource(R.drawable.star),
             contentDescription = null,
             modifier = Modifier
-                .size(width = 24.dp, height = 24.dp)
                 .align(alignment = Alignment.BottomStart)
         )
         Text(
@@ -84,7 +96,7 @@ fun ShowCardBox(card: Card) {
             style = TextStyle(fontSize = 24.sp),
             modifier = Modifier
                 .align(alignment = Alignment.BottomEnd)
-                .padding(32.dp, 0.dp, 0.dp, 0.dp)
+                .padding(start = 32.dp)
         )
     }
 }
@@ -98,8 +110,8 @@ fun ShowCardColumn(card: Card) {
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        colorResource(R.color.card_bg_start),
-                        colorResource(R.color.card_bg_finish)
+                        CardBgStart,
+                        CardBgFinish
                     )
                 )
             )
@@ -111,52 +123,52 @@ fun ShowCardColumn(card: Card) {
         ) {
             Row(
                 horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier
+                    .fillMaxWidth()
             ) {
                 Row(
-                    modifier = Modifier.padding(
-                        start = 0.dp,
-                        top = 0.dp,
-                        end = 56.dp,
-                        bottom = 0.dp
-                    ),
+                    modifier = Modifier
+                        .widthIn(0.dp, 248.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         text = card.title,
-                        modifier = Modifier.padding(
-                            start = 0.dp,
-                            top = 0.dp,
-                            end = 8.dp,
-                            bottom = 0.dp
-                        ),
+                        softWrap = false,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier
+                            .padding(end = 8.dp)
+                            .widthIn(0.dp, 224.dp),
                         style = TextStyle(fontSize = 15.sp)
                     )
                     Image(
                         painter = painterResource(R.drawable.edit),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(12.dp)
+                        contentDescription = null
                     )
                 }
 
                 Image(
                     painter = painterResource(R.drawable.wallet),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(width = 24.dp, height = 24.dp)
+                    contentDescription = null
                 )
             }
 
             Text(
                 text = card.id,
-                style = TextStyle(fontSize = 14.sp)
+                softWrap = false,
+                overflow = TextOverflow.Ellipsis,
+                style = TextStyle(fontSize = 14.sp),
+                modifier = Modifier
+                    .widthIn(0.dp, 280.dp)
             )
         }
         Column(verticalArrangement = Arrangement.Bottom) {
             Text(
                 text = card.defaultText,
-                style = TextStyle(fontSize = 10.sp)
+                softWrap = false,
+                overflow = TextOverflow.Ellipsis,
+                style = TextStyle(fontSize = 10.sp),
+                modifier = Modifier
+                    .widthIn(0.dp, 280.dp)
             )
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -165,19 +177,14 @@ fun ShowCardColumn(card: Card) {
             ) {
                 Image(
                     painter = painterResource(R.drawable.star),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(width = 24.dp, height = 24.dp)
+                    contentDescription = null
                 )
                 Text(
                     text = card.balance,
                     style = TextStyle(fontSize = 24.sp),
-                    modifier = Modifier.padding(
-                        start = 32.dp,
-                        top = 0.dp,
-                        end = 0.dp,
-                        bottom = 0.dp
-                    )
+                    softWrap = false,
+                    modifier = Modifier
+                        .padding(start = 32.dp)
                 )
             }
         }
@@ -188,14 +195,13 @@ fun ShowCardColumn(card: Card) {
 fun ShowCardConstraint(card: Card) {
     ConstraintLayout(
         modifier = Modifier
-            .padding(16.dp)
             .size(width = 312.dp, height = 184.dp)
             .clip(RoundedCornerShape(14.dp))
             .background(
                 brush = Brush.verticalGradient(
                     colors = listOf(
-                        colorResource(R.color.card_bg_start),
-                        colorResource(R.color.card_bg_finish)
+                        CardBgStart,
+                        CardBgFinish
                     )
                 )
             )
@@ -205,8 +211,11 @@ fun ShowCardConstraint(card: Card) {
 
         Text(
             text = card.title,
+            softWrap = false,
+            overflow = TextOverflow.Ellipsis,
             modifier = Modifier
-                .padding(start = 0.dp, top = 0.dp, end = 8.dp, bottom = 0.dp)
+                .padding(end = 8.dp)
+                .widthIn(0.dp, 224.dp)
                 .constrainAs(titleText) {},
             style = TextStyle(fontSize = 15.sp)
         )
@@ -214,7 +223,6 @@ fun ShowCardConstraint(card: Card) {
             painter = painterResource(R.drawable.edit),
             contentDescription = null,
             modifier = Modifier
-                .size(12.dp)
                 .constrainAs(editImg) {
                     bottom.linkTo(titleText.bottom)
                     top.linkTo(titleText.top)
@@ -226,33 +234,37 @@ fun ShowCardConstraint(card: Card) {
             painter = painterResource(R.drawable.wallet),
             contentDescription = null,
             modifier = Modifier
-                .size(width = 24.dp, height = 24.dp)
                 .constrainAs(walletImg) {
                     end.linkTo(parent.end)
                 }
         )
         Text(
             text = card.id,
+            softWrap = false,
+            overflow = TextOverflow.Ellipsis,
             style = TextStyle(fontSize = 14.sp),
             modifier = Modifier
+                .widthIn(0.dp, 280.dp)
                 .constrainAs(defaultText) {
                     top.linkTo(titleText.bottom)
                 }
         )
         Text(
             text = card.defaultText,
+            softWrap = false,
+            overflow = TextOverflow.Ellipsis,
             style = TextStyle(fontSize = 10.sp),
             modifier = Modifier
+                .widthIn(0.dp, 280.dp)
                 .constrainAs(idText) {
                     bottom.linkTo(starImg.top)
                 }
-                .padding(horizontal = 0.dp, vertical = 8.dp)
+                .padding(vertical = 8.dp)
         )
         Image(
             painter = painterResource(R.drawable.star),
             contentDescription = null,
             modifier = Modifier
-                .size(width = 24.dp, height = 24.dp)
                 .constrainAs(starImg) {
                     bottom.linkTo(parent.bottom)
                 }
@@ -276,10 +288,10 @@ fun ShowCardColumnPreview() {
     MyFigmaTheme {
         ShowCardColumn(
             Card(
-                "Titlejjjjjjjjjjjjjjjjjjjjjjjjjrdjhjjj   tttttttttttttt ffff",
+                "Title LongLongTitle Very Long Title LongLongTitle Very Long Title",
                 "UA 000000000000000",
                 "По умолчанию",
-                "11 5004444444444 500.00 UA"
+                "11 5004444444444 500.00 UAH"
             )
         )
     }
@@ -291,10 +303,10 @@ fun ShowCardConstraintPreview() {
     MyFigmaTheme {
         ShowCardConstraint(
             Card(
-                "Titlejjjjjjjjjjjjjjjjjjjjjjjjjrdjhjjj   tttttttttttttt ffff",
+                "Title LongLongTitle Very Long Title LongLongTitle Very Long Title",
                 "UA 000000000000000",
                 "По умолчанию",
-                "11 5004444444444 500.00 UA"
+                "11 5004444444444 500.00 UAH"
             )
         )
     }
@@ -306,10 +318,10 @@ fun ShowCardBoxPreview() {
     MyFigmaTheme {
         ShowCardBox(
             Card(
-                "Titlejjjjjjjjjjjjjjjjjjjjjjjjjrdjhjjj   tttttttttttttt ffff",
+                "Title LongLongTitle Very Long Title LongLongTitle Very Long Title",
                 "UA 000000000000000",
                 "По умолчанию",
-                "11 5004444444444 500.00 UA"
+                "11 5004444444444 500.00 UAH"
             )
         )
     }

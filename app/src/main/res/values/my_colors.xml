@@ -5,9 +5,7 @@
     <color name="surface">#F6F6F6</color>
     <color name="secondary">#2E66AC</color>
     <color name="primary">#4BC4B6</color>
-    <color name="my_background">#E5E5E5</color>
     <color name="bottom_menu_background">#FFFFFF</color>
-    <color name="background_sheet">#F6F6F6</color>
     <color name="on_surface_variant">#969696</color>
     <color name="on_surface">#262626</color>
     <color name="attention">#D50000</color>
