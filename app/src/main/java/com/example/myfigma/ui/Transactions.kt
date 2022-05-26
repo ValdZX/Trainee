@@ -1,75 +1,60 @@
 package com.example.myfigma.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.TabRowDefaults.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myfigma.R
-import com.example.myfigma.ui.theme.Surface
+import com.example.myfigma.ui.theme.*
 
 @Composable
-fun BottomSheetListItem(transactionItem: TransactionItem, onItemClick: (String) -> Unit) {
-    Box(
+fun TransactionsListItem(transactionItem: TransactionItemDto, onItemClick: (String) -> Unit) {
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = { onItemClick(transactionItem.title) })
-            .heightIn(min = 88.dp, max = 112.dp)
-            //.height(112.dp)
             .background(color = Surface)
-            .padding(all = 16.dp)
+            .padding(start = 16.dp, top = 16.dp, end = 14.dp, bottom = 11.dp),
+        verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Row() {
-            Box(
-                modifier = Modifier
-                    .size(40.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(colorResource(R.color.primary))
-            ) {
-                Image(
-                    painter = painterResource(id = transactionItem.icon),
-                    contentDescription = "",
-                    modifier = Modifier
-                        .size(24.dp)
-                        .fillMaxSize()
-                        .align(alignment = Alignment.Center)
-                )
-            }
+        Row {
+            Image(
+                painter = painterResource(id = transactionItem.icon),
+                contentDescription = ""
+            )
             Column(
-                modifier = Modifier.padding(start = 17.dp, top = 0.dp, end = 0.dp, bottom = 0.dp),
-                verticalArrangement = Arrangement.Top
+                modifier = Modifier.padding(start = 17.dp)
             ) {
-
                 Text(
                     text = transactionItem.title,
-                    style = TextStyle(fontSize = 15.sp, color = colorResource(R.color.on_surface))
+                    style = TextStyle(fontSize = 15.sp, color = OnSurface)
                 )
                 Text(
                     text = transactionItem.iban,
                     style = TextStyle(
                         fontSize = 14.sp,
-                        color = colorResource(R.color.on_surface_variant)
+                        color = OnSurfaceVariant
                     )
                 )
-                if (!transactionItem.attention.equals("")) {
+                if (transactionItem.attention != "") {
                     Text(
                         text = transactionItem.attention,
                         style = TextStyle(
                             fontSize = 14.sp,
-                            color = colorResource(R.color.attention)
+                            color = Attention
                         )
                     )
                 }
@@ -77,15 +62,16 @@ fun BottomSheetListItem(transactionItem: TransactionItem, onItemClick: (String) 
         }
         Text(
             text = transactionItem.sum,
-            style = TextStyle(fontSize = 14.sp, color = colorResource(R.color.on_surface)),
+            style = TextStyle(fontSize = 14.sp, color = OnSurface),
+            textAlign = TextAlign.End,
             modifier = Modifier
-                .align(Alignment.BottomEnd)
+                .fillMaxWidth()
         )
     }
 }
 
 @Composable
-fun BottomSheetListTopHeader() {
+fun SearchHeader() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -103,141 +89,35 @@ fun BottomSheetListTopHeader() {
     ) {
         Text(
             text = stringResource(R.string.bottom_sheet_list_top_header),
-            style = TextStyle(fontSize = 18.sp, color = colorResource(R.color.surface_selected))
+            style = TextStyle(fontSize = 18.sp, color = SurfaceSelected)
         )
         Image(
             painter = painterResource(R.drawable.button_search),
-            contentDescription = "",
-            modifier = Modifier
-                .size(24.dp)
-                .fillMaxSize()
+            contentDescription = ""
         )
     }
 }
 
 @Composable
-fun BottomSheetListHeader(transactionHeader: TransactionHeader) {
-    Box(
+fun TransactionsListHeader(transactionItem: TransactionItemDto) {
+    Text(
+        text = transactionItem.title,
+        style = TextStyle(fontSize = 18.sp, color = SurfaceSelected),
         modifier = Modifier
             .fillMaxWidth()
             .height(50.dp)
             .background(color = Surface)
             .padding(horizontal = 16.dp, vertical = 13.dp)
-    ) {
-        Text(
-            text = transactionHeader.title,
-            style = TextStyle(fontSize = 18.sp, color = colorResource(R.color.surface_selected))
-        )
-    }
+    )
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun SheetContent() {
-
-    val sectionListItemsToday = listOf(
-        TransactionItem(
-            R.drawable.transfer,
-            "Между своими счетами",
-            "UA 85 399622 0000026205500011673",
-            "",
-            "-100.00 UAH"
-        ),
-        TransactionItem(
-            R.drawable.swift,
-            "SWIFT - платёж",
-            "UA 85 399622 0000026205500011673",
-            "",
-            "-100.00 UAH"
-        ),
-        TransactionItem(
-            R.drawable.uk_territory,
-            "Платежи по Украине",
-            "UA 85 399622 0000026205500011673",
-            "",
-            "-57 870.00 UAH"
-        ),
-        TransactionItem(
-            R.drawable.transfer,
-            "Между своими счетами",
-            "UA 85 399622 0000026205500011673",
-            "Ошибка перевода",
-            "-57 870.00 UAH"
-        )
+fun ShowDivider() {
+    Divider(
+        color = Divider,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(1.dp)
     )
 
-    val sectionListItemsTomorrow = listOf(
-        TransactionItem(
-            R.drawable.swift,
-            "SWIFT - платёж",
-            "UA 85 399622 0000026205500011673",
-            "",
-            "-100.00 UAH"
-        ),
-        TransactionItem(
-            R.drawable.uk_territory,
-            "Платежи по Украине",
-            "UA 85 399622 0000026205500011673",
-            "",
-            "-57 870.00 UAH"
-        ),
-        TransactionItem(
-            R.drawable.swift,
-            "SWIFT - платёж",
-            "UA 85 399622 0000026205500011673",
-            "",
-            "-100.00 UAH"
-        )
-    )
-
-    val sectionListItemsSomeDay = listOf(
-        TransactionItem(
-            R.drawable.transfer,
-            "Между своими счетами",
-            "UA 85 399622 0000026205500011673",
-            "Ошибка перевода",
-            "-57 870.00 UAH"
-        ),
-        TransactionItem(
-            R.drawable.swift,
-            "SWIFT - платёж",
-            "UA 85 399622 0000026205500011673",
-            "Ошибка перевода",
-            "-100.00 UAH"
-        ),
-        TransactionItem(
-            R.drawable.transfer,
-            "Между своими счетами",
-            "UA 85 399622 0000026205500011673",
-            "Ошибка перевода",
-            "-57 870.00 UAH"
-        ),
-        TransactionItem(
-            R.drawable.uk_territory,
-            "Платежи по Украине",
-            "UA 85 399622 0000026205500011673",
-            "",
-            "-57 870.00 UAH"
-        )
-    )
-
-    val sectionHeaders = listOf(
-        TransactionHeader("Сегодня", sectionListItemsToday),
-        TransactionHeader("Вчера", sectionListItemsTomorrow),
-        TransactionHeader("19.05.2021", sectionListItemsSomeDay)
-    )
-
-    LazyColumn() {
-        stickyHeader {
-            BottomSheetListTopHeader()
-        }
-        sectionHeaders.forEach { section ->
-            item {
-                BottomSheetListHeader(section)
-            }
-            items(section.listTransactionItems.count()) {
-                BottomSheetListItem(section.listTransactionItems[it], onItemClick = { })
-            }
-        }
-    }
 }
