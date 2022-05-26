@@ -102,7 +102,6 @@ fun MainScreen() {
 fun ShowButton(title: String, img: Int) {
     Column(
         modifier = Modifier
-            //.size(88.dp)
             .padding(16.dp)
             .clickable { /* Do something! */ },
         verticalArrangement = Arrangement.Top,

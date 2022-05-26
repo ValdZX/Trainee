@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.example.myfigma.ui.theme.Secondary
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
@@ -18,7 +19,7 @@ fun ShowHorizontalPager(){
     HorizontalPager(
         count = 3,
         state = pagerState,
-        contentPadding = PaddingValues(horizontal = 16.dp),
+        contentPadding = PaddingValues(horizontal = 32.dp),
     ) { page ->
         when(page){
             0 ->
@@ -51,6 +52,7 @@ fun ShowHorizontalPager(){
     }
     HorizontalPagerIndicator(
         pagerState = pagerState,
+        activeColor = Secondary,
         modifier = Modifier
             .padding(16.dp),
     )
