@@ -11,7 +11,7 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
@@ -31,6 +31,7 @@ fun MainPage() {
             .background(Background)
             .fillMaxSize()
     ) {
+        MyHeader()
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -41,7 +42,6 @@ fun MainPage() {
     }
 }
 
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun ScreenContent() {
@@ -50,15 +50,19 @@ fun ScreenContent() {
     var scrolledY = 0f
     var previousOffset = 0
 
+    //var scrolledItem by remember { mutableStateOf(lazyListState.) }
+    //var readyToChange by remember { mutableStateOf(false) }
+
     LazyColumn(
         Modifier.fillMaxSize(),
         lazyListState
     ) {
+
         item {
             Box(modifier = Modifier
                 .graphicsLayer {
                     scrolledY += lazyListState.firstVisibleItemScrollOffset - previousOffset
-                    translationY = scrolledY * 0.5f
+                    translationY = scrolledY * 1f
                     previousOffset = lazyListState.firstVisibleItemScrollOffset
                 }) {
                 MainScreen()
@@ -85,7 +89,6 @@ fun MainScreen() {
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        MyHeader()
         ShowHorizontalPager()
         Row(
             modifier = Modifier
@@ -102,8 +105,8 @@ fun MainScreen() {
 fun ShowButton(title: String, img: Int) {
     Column(
         modifier = Modifier
-            .padding(16.dp)
-            .clickable { /* Do something! */ },
+            .clickable { /* Do something! */ }
+            .padding(16.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
