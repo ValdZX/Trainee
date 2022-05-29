@@ -11,7 +11,9 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
@@ -26,17 +28,25 @@ import com.example.myfigma.ui.theme.Background
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MainPage() {
+
+    val currentScrollOffset = rememberSaveable { mutableStateOf(0f) }
+
     Column(
         modifier = Modifier
-            .background(Background)
+            .background(
+                color = Background
+            )
             .fillMaxSize()
     ) {
-        MyHeader()
+        MyHeader(value = currentScrollOffset.value)
         Box(
             modifier = Modifier
                 .weight(1f)
         ) {
-            ScreenContent()
+            ScreenContent(value = currentScrollOffset.value,
+                onItemScrollOffsetChange = {
+                    currentScrollOffset.value = it
+                })
         }
         ShowBottomNavigation()
     }
@@ -44,14 +54,13 @@ fun MainPage() {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ScreenContent() {
+fun ScreenContent(value: Float, onItemScrollOffsetChange: (Float) -> Unit) {
 
     val lazyListState = rememberLazyListState()
     var scrolledY = 0f
     var previousOffset = 0
 
-    //var scrolledItem by remember { mutableStateOf(lazyListState.) }
-    //var readyToChange by remember { mutableStateOf(false) }
+    var firstItemSize: Int
 
     LazyColumn(
         Modifier.fillMaxSize(),
@@ -61,15 +70,22 @@ fun ScreenContent() {
         item {
             Box(modifier = Modifier
                 .graphicsLayer {
+
                     scrolledY += lazyListState.firstVisibleItemScrollOffset - previousOffset
                     translationY = scrolledY * 1f
                     previousOffset = lazyListState.firstVisibleItemScrollOffset
+
+                    if (lazyListState.firstVisibleItemIndex == 0) {
+                        firstItemSize = lazyListState.layoutInfo.visibleItemsInfo[0].size
+                        onItemScrollOffsetChange(lazyListState.firstVisibleItemScrollOffset.toFloat() / firstItemSize.toFloat())
+                    } else
+                        onItemScrollOffsetChange(1f)
                 }) {
                 MainScreen()
             }
         }
         stickyHeader {
-            SearchHeader()
+            SearchHeader(value)
             ShowDivider()
         }
         items(sectionTransactions.count()) {

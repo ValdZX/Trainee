@@ -24,6 +24,7 @@ fun AutoSizeText(
                 drawContent()
             }
         },
+        textAlign = textAlign,
         style = scaledTextStyle,
         softWrap = false,
         onTextLayout = { textLayoutResult ->

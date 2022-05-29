@@ -12,6 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -87,7 +88,7 @@ fun ShowCardBox(card: Card) {
         )
         AutoSizeText(
             text = card.balance,
-            textStyle = TextStyle(fontSize = 24.sp),
+            textStyle = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Medium),
             modifier = Modifier
                 .align(alignment = Alignment.BottomEnd)
                 .padding(start = 32.dp)
@@ -176,7 +177,7 @@ fun ShowCardColumn(card: Card) {
                 )
                 AutoSizeText(
                     text = card.balance,
-                    textStyle = TextStyle(fontSize = 24.sp)
+                    textStyle = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Medium)
                 )
             }
         }
@@ -263,7 +264,7 @@ fun ShowCardConstraint(card: Card) {
         )
         AutoSizeText(
             text = card.balance,
-            textStyle = TextStyle(fontSize = 24.sp),
+            textStyle = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Medium),
             modifier = Modifier
                 .padding(start = 32.dp)
                 .constrainAs(balanceText) {

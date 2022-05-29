@@ -71,11 +71,12 @@ fun TransactionsListItem(transactionItem: TransactionItemDto, onItemClick: (Stri
 }
 
 @Composable
-fun SearchHeader() {
+fun SearchHeader(value: Float) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .height(50.dp)
+            .background(color = ScrolledHeader.copy(alpha = if (value == 1f) 1f else 0f))
             .clip(
                 RoundedCornerShape(
                     topEnd = 14.dp,
