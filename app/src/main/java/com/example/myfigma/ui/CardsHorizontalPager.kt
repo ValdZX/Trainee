@@ -13,7 +13,7 @@ import com.google.accompanist.pager.rememberPagerState
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun ShowHorizontalPager(){
+fun ShowHorizontalPager() {
 
     val pagerState = rememberPagerState()
     HorizontalPager(
@@ -21,7 +21,7 @@ fun ShowHorizontalPager(){
         state = pagerState,
         contentPadding = PaddingValues(horizontal = 32.dp),
     ) { page ->
-        when(page){
+        when (page) {
             0 ->
                 ShowCardColumn(
                     Card(
@@ -29,7 +29,8 @@ fun ShowHorizontalPager(){
                         "UA 000000000000000",
                         "По умолчанию",
                         "11 500 44444444444444444 500.00 UA"
-                    ))
+                    )
+                )
             1 ->
                 ShowCardConstraint(
                     Card(
@@ -37,7 +38,8 @@ fun ShowHorizontalPager(){
                         "UA 1111111111111111111111",
                         "По умолчанию1",
                         "11 500 44444444444444444 500.00 UA"
-                    ))
+                    )
+                )
             2 ->
                 ShowCardBox(
                     Card(
@@ -45,7 +47,8 @@ fun ShowHorizontalPager(){
                         "UA 222222222222222222222",
                         "По умолчанию2",
                         "11 500 44444444444444444 500.00 UA"
-                    ))
+                    )
+                )
         }
 
 

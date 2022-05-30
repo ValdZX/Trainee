@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myfigma.R
 import com.example.myfigma.ui.theme.Background
+import com.example.myfigma.ui.theme.ScrolledHeader
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -33,9 +34,7 @@ fun MainPage() {
 
     Column(
         modifier = Modifier
-            .background(
-                color = Background
-            )
+            .background(color = ScrolledHeader.copy(alpha = if (currentScrollOffset.value < 0.75f) 0f else (currentScrollOffset.value - 0.75f) * 4))
             .fillMaxSize()
     ) {
         MyHeader(value = currentScrollOffset.value)
@@ -43,10 +42,9 @@ fun MainPage() {
             modifier = Modifier
                 .weight(1f)
         ) {
-            ScreenContent(value = currentScrollOffset.value,
-                onItemScrollOffsetChange = {
-                    currentScrollOffset.value = it
-                })
+            ScreenContent(onItemScrollOffsetChange = {
+                currentScrollOffset.value = it
+            })
         }
         ShowBottomNavigation()
     }
@@ -54,7 +52,7 @@ fun MainPage() {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ScreenContent(value: Float, onItemScrollOffsetChange: (Float) -> Unit) {
+fun ScreenContent(onItemScrollOffsetChange: (Float) -> Unit) {
 
     val lazyListState = rememberLazyListState()
     var scrolledY = 0f
@@ -85,7 +83,7 @@ fun ScreenContent(value: Float, onItemScrollOffsetChange: (Float) -> Unit) {
             }
         }
         stickyHeader {
-            SearchHeader(value)
+            SearchHeader()
             ShowDivider()
         }
         items(sectionTransactions.count()) {
