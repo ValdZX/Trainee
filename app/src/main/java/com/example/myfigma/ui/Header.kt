@@ -15,9 +15,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myfigma.R
+import com.example.myfigma.bl.MainAction
 
 @Composable
-fun MyHeader(value: Float) {
+fun MyHeader(value: Float, dispatch: (MainAction) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -28,7 +29,7 @@ fun MyHeader(value: Float) {
             painter = painterResource(R.drawable.header_button_menu),
             contentDescription = null,
             modifier = Modifier
-                .clickable {/* Do something! */ }
+                .clickable { dispatch(MainAction.OpenMenu) }
         )
         Box(contentAlignment = Alignment.Center) {
             Image(
@@ -49,7 +50,7 @@ fun MyHeader(value: Float) {
             painter = painterResource(R.drawable.header_button_chat),
             contentDescription = null,
             modifier = Modifier
-                .clickable {/* Do something! */ }
+                .clickable { dispatch(MainAction.OpenMessages) }
         )
     }
 }
@@ -57,5 +58,7 @@ fun MyHeader(value: Float) {
 @Preview(showBackground = true)
 @Composable
 fun MyHeaderPreview() {
-    MyHeader(1f)
+    MyHeader(1f) {
+        //Preview
+    }
 }

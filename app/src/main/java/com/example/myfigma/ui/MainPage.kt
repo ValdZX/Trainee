@@ -23,12 +23,14 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.myfigma.R
+import com.example.myfigma.bl.MainAction
+import com.example.myfigma.bl.MainState
 import com.example.myfigma.ui.theme.Background
 import com.example.myfigma.ui.theme.ScrolledHeader
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun MainPage() {
+fun MainPage(state: MainState, dispatch: (MainAction) -> Unit) {
 
     val currentScrollOffset = rememberSaveable { mutableStateOf(0f) }
 
@@ -37,14 +39,17 @@ fun MainPage() {
             .background(color = ScrolledHeader.copy(alpha = if (currentScrollOffset.value < 0.75f) 0f else (currentScrollOffset.value - 0.75f) * 4))
             .fillMaxSize()
     ) {
-        MyHeader(value = currentScrollOffset.value)
+        MyHeader(value = currentScrollOffset.value, dispatch = dispatch)
         Box(
             modifier = Modifier
                 .weight(1f)
         ) {
-            ScreenContent(onItemScrollOffsetChange = {
+            ScreenContent(
+                state = state,
+                dispatch = dispatch
+            ) {
                 currentScrollOffset.value = it
-            })
+            }
         }
         ShowBottomNavigation()
     }
@@ -52,7 +57,11 @@ fun MainPage() {
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ScreenContent(onItemScrollOffsetChange: (Float) -> Unit) {
+fun ScreenContent(
+    state: MainState,
+    dispatch: (MainAction) -> Unit,
+    onItemScrollOffsetChange: (Float) -> Unit
+) {
 
     val lazyListState = rememberLazyListState()
     var scrolledY = 0f
@@ -86,11 +95,12 @@ fun ScreenContent(onItemScrollOffsetChange: (Float) -> Unit) {
             SearchHeader()
             ShowDivider()
         }
-        items(sectionTransactions.count()) {
-            if (sectionTransactions[it].isHeader)
-                TransactionsListHeader(sectionTransactions[it])
+        val transactions = state.transactions
+        items(transactions.count()) {
+            if (transactions[it].isHeader)
+                TransactionsListHeader(transactions[it])
             else {
-                TransactionsListItem(sectionTransactions[it], onItemClick = { })
+                TransactionsListItem(transactions[it], onItemClick = { })
                 ShowDivider()
             }
         }
