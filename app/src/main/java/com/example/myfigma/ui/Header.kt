@@ -22,25 +22,28 @@ fun MyHeader(value: Float) {
         modifier = Modifier
             .fillMaxWidth()
             .padding(all = 16.dp),
-        horizontalArrangement = Arrangement.SpaceBetween
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
             painter = painterResource(R.drawable.header_button_menu),
             contentDescription = null,
-            modifier = Modifier
-                .clickable {/* Do something! */ }
+            modifier = Modifier.clickable {/* Do something! */ }
         )
-        Box(contentAlignment = Alignment.Center) {
+        Box(
+            modifier = Modifier
+                .weight(1f),
+            contentAlignment = Alignment.Center
+        ) {
             Image(
                 painter = painterResource(R.drawable.logo),
                 contentDescription = null,
-                alpha = if (value < 0.75f) 1f else 1 - (value - 0.75f) * 4
+                alpha = 1 - value
             )
             AutoSizeText(
                 text = "11 500 44444444444444444 500.00 UA",
                 modifier = Modifier
-                    .width(250.dp)
-                    .alpha(if (value < 0.75f) 0f else (value - 0.75f) * 4),
+                    .alpha(value),
                 textStyle = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Medium),
                 textAlign = TextAlign.Center
             )

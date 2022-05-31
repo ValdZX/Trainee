@@ -11,9 +11,7 @@ import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
@@ -29,69 +27,60 @@ import com.example.myfigma.ui.theme.ScrolledHeader
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MainPage() {
-
-    val currentScrollOffset = rememberSaveable { mutableStateOf(0f) }
-
+    var transformationOffset by remember { mutableStateOf(0f) }
+    val alpha = if (transformationOffset < 0.75f) 0f else (transformationOffset - 0.75f) * 4
     Column(
         modifier = Modifier
-            .background(color = ScrolledHeader.copy(alpha = if (currentScrollOffset.value < 0.75f) 0f else (currentScrollOffset.value - 0.75f) * 4))
+            .background(color = ScrolledHeader.copy(alpha = alpha))
             .fillMaxSize()
     ) {
-        MyHeader(value = currentScrollOffset.value)
-        Box(
-            modifier = Modifier
-                .weight(1f)
-        ) {
-            ScreenContent(onItemScrollOffsetChange = {
-                currentScrollOffset.value = it
-            })
-        }
+        MyHeader(value = alpha)
+        ScreenContent(onItemScrollOffsetChange = {
+            transformationOffset = it
+        })
         ShowBottomNavigation()
     }
 }
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ScreenContent(onItemScrollOffsetChange: (Float) -> Unit) {
-
-    val lazyListState = rememberLazyListState()
-    var scrolledY = 0f
-    var previousOffset = 0
-
-    var firstItemSize: Int
-
-    LazyColumn(
-        Modifier.fillMaxSize(),
-        lazyListState
-    ) {
-
-        item {
-            Box(modifier = Modifier
-                .graphicsLayer {
-
-                    scrolledY += lazyListState.firstVisibleItemScrollOffset - previousOffset
-                    translationY = scrolledY * 1f
-                    previousOffset = lazyListState.firstVisibleItemScrollOffset
-
-                    if (lazyListState.firstVisibleItemIndex == 0) {
-                        firstItemSize = lazyListState.layoutInfo.visibleItemsInfo[0].size
-                        onItemScrollOffsetChange(lazyListState.firstVisibleItemScrollOffset.toFloat() / firstItemSize.toFloat())
-                    } else
-                        onItemScrollOffsetChange(1f)
-                }) {
-                MainScreen()
+fun ColumnScope.ScreenContent(onItemScrollOffsetChange: (Float) -> Unit) {
+    Box(modifier = Modifier.weight(1f)) {
+        val lazyListState = rememberLazyListState()
+        var scrolledY = 0f
+        var previousOffset = 0
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            state = lazyListState
+        ) {
+            item {
+                Box(modifier = Modifier
+                    .graphicsLayer {
+                        scrolledY += lazyListState.firstVisibleItemScrollOffset - previousOffset
+                        translationY = scrolledY * 1f
+                        previousOffset = lazyListState.firstVisibleItemScrollOffset
+                        val alpha = if (lazyListState.firstVisibleItemIndex == 0) {
+                            val firstItemSize = lazyListState.layoutInfo.visibleItemsInfo[0].size
+                            lazyListState.firstVisibleItemScrollOffset.toFloat() / firstItemSize.toFloat()
+                        } else 1f
+                        onItemScrollOffsetChange(alpha)
+                    }) {
+                    MainScreen()
+                }
             }
-        }
-        stickyHeader {
-            SearchHeader()
-            ShowDivider()
-        }
-        items(sectionTransactions.count()) {
-            if (sectionTransactions[it].isHeader)
-                TransactionsListHeader(sectionTransactions[it])
-            else {
-                TransactionsListItem(sectionTransactions[it], onItemClick = { })
-                ShowDivider()
+            stickyHeader {
+                Searcher()
+                TransactionsListDivider()
+            }
+            items(sectionTransactions.count()) { currentItem ->
+                if (sectionTransactions[currentItem] is TransactionHeaderDto)
+                    TransactionsListHeader(sectionTransactions[currentItem] as TransactionHeaderDto)
+                else {
+                    TransactionsListItem(
+                        sectionTransactions[currentItem] as TransactionItemDto,
+                        onItemClick = { })
+                    TransactionsListDivider()
+                }
             }
         }
     }

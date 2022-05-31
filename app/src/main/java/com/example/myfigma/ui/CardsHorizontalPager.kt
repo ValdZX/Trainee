@@ -14,7 +14,6 @@ import com.google.accompanist.pager.rememberPagerState
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun ShowHorizontalPager() {
-
     val pagerState = rememberPagerState()
     HorizontalPager(
         count = 3,
@@ -50,8 +49,6 @@ fun ShowHorizontalPager() {
                     )
                 )
         }
-
-
     }
     HorizontalPagerIndicator(
         pagerState = pagerState,

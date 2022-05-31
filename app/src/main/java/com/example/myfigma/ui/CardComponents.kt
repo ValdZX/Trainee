@@ -140,13 +140,11 @@ fun ShowCardColumn(card: Card) {
                         contentDescription = null
                     )
                 }
-
                 Image(
                     painter = painterResource(R.drawable.wallet),
                     contentDescription = null
                 )
             }
-
             Text(
                 text = card.id,
                 softWrap = false,
@@ -201,7 +199,6 @@ fun ShowCardConstraint(card: Card) {
             .padding(16.dp)
     ) {
         val (titleText, editImg, walletImg, idText, defaultText, starImg, balanceText) = createRefs()
-
         Text(
             text = card.title,
             softWrap = false,
@@ -222,7 +219,6 @@ fun ShowCardConstraint(card: Card) {
                     start.linkTo(titleText.end)
                 }
         )
-
         Image(
             painter = painterResource(R.drawable.wallet),
             contentDescription = null,

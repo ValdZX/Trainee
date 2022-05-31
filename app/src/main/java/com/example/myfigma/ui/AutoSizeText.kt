@@ -11,12 +11,11 @@ import androidx.compose.ui.text.style.TextAlign
 fun AutoSizeText(
     text: String,
     textStyle: TextStyle,
-    textAlign: TextAlign? = null,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    textAlign: TextAlign? = null
 ) {
     var scaledTextStyle by remember { mutableStateOf(textStyle) }
     var readyToDraw by remember { mutableStateOf(false) }
-
     Text(
         text,
         modifier.drawWithContent {

@@ -71,7 +71,7 @@ fun TransactionsListItem(transactionItem: TransactionItemDto, onItemClick: (Stri
 }
 
 @Composable
-fun SearchHeader() {
+fun Searcher() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -99,9 +99,9 @@ fun SearchHeader() {
 }
 
 @Composable
-fun TransactionsListHeader(transactionItem: TransactionItemDto) {
+fun TransactionsListHeader(transactionHeader: TransactionHeaderDto) {
     Text(
-        text = transactionItem.title,
+        text = transactionHeader.title,
         style = TextStyle(fontSize = 18.sp, color = SurfaceSelected),
         modifier = Modifier
             .fillMaxWidth()
@@ -112,12 +112,11 @@ fun TransactionsListHeader(transactionItem: TransactionItemDto) {
 }
 
 @Composable
-fun ShowDivider() {
+fun TransactionsListDivider() {
     Divider(
         color = Divider,
         modifier = Modifier
             .fillMaxWidth()
             .height(1.dp)
     )
-
 }

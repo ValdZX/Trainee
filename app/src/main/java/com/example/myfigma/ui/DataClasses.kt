@@ -6,10 +6,10 @@ data class Card(
     val title: String,
     val id: String,
     val defaultText: String,
-    val balance: String)
+    val balance: String
+)
 
 data class TransactionItemDto(
-    val isHeader: Boolean = false,
     val icon: Int = 0,
     val title: String = "",
     val iban: String = "",
@@ -17,105 +17,95 @@ data class TransactionItemDto(
     val sum: String = ""
 )
 
+data class TransactionHeaderDto(
+    val title: String = ""
+)
+
 val sectionTransactions = listOf(
-    TransactionItemDto(
-        isHeader = true,
+    TransactionHeaderDto(
         title = "Сегодня"
     ),
     TransactionItemDto(
-        false,
-        R.drawable.transfer,
-        "Между своими счетами",
-        "UA 85 399622 0000026205500011673",
-        "",
-        "-100.00 UAH"
+        icon = R.drawable.transfer,
+        title = "Между своими счетами",
+        iban = "UA 85 399622 0000026205500011673",
+        attention = "",
+        sum = "-100.00 UAH"
     ),
     TransactionItemDto(
-        false,
-        R.drawable.swift,
-        "SWIFT - платёж",
-        "UA 85 399622 0000026205500011673",
-        "",
-        "-100.00 UAH"
+        icon = R.drawable.swift,
+        title = "SWIFT - платёж",
+        iban = "UA 85 399622 0000026205500011673",
+        attention = "",
+        sum = "-100.00 UAH"
     ),
     TransactionItemDto(
-        false,
-        R.drawable.uk_territory,
-        "Платежи по Украине",
-        "UA 85 399622 0000026205500011673",
-        "",
-        "-57 870.00 UAH"
+        icon = R.drawable.uk_territory,
+        title = "Платежи по Украине",
+        iban = "UA 85 399622 0000026205500011673",
+        attention = "",
+        sum = "-57 870.00 UAH"
     ),
     TransactionItemDto(
-        false,
-        R.drawable.transfer_error,
-        "Между своими счетами",
-        "UA 85 399622 0000026205500011673",
-        "Ошибка перевода",
-        "-57 870.00 UAH"
+        icon = R.drawable.transfer_error,
+        title = "Между своими счетами",
+        iban = "UA 85 399622 0000026205500011673",
+        attention = "Ошибка перевода",
+        sum = "-57 870.00 UAH"
     ),
-    TransactionItemDto(
-        isHeader = true,
+    TransactionHeaderDto(
         title = "Вчера"
     ),
     TransactionItemDto(
-        false,
-        R.drawable.swift,
-        "SWIFT - платёж",
-        "UA 85 399622 0000026205500011673",
-        "",
-        "-100.00 UAH"
+        icon = R.drawable.swift,
+        title = "SWIFT - платёж",
+        iban = "UA 85 399622 0000026205500011673",
+        attention = "",
+        sum = "-100.00 UAH"
     ),
     TransactionItemDto(
-        false,
-        R.drawable.uk_territory,
-        "Платежи по Украине",
-        "UA 85 399622 0000026205500011673",
-        "",
-        "-57 870.00 UAH"
+        icon = R.drawable.uk_territory,
+        title = "Платежи по Украине",
+        iban = "UA 85 399622 0000026205500011673",
+        attention = "",
+        sum = "-57 870.00 UAH"
     ),
     TransactionItemDto(
-        false,
-        R.drawable.swift,
-        "SWIFT - платёж",
-        "UA 85 399622 0000026205500011673",
-        "",
-        "-100.00 UAH"
+        icon = R.drawable.swift,
+        title = "SWIFT - платёж",
+        iban = "UA 85 399622 0000026205500011673",
+        attention = "",
+        sum = "-100.00 UAH"
     ),
-    TransactionItemDto(
-        isHeader = true,
+    TransactionHeaderDto(
         title = "19.05.2021"
     ),
     TransactionItemDto(
-        false,
-        R.drawable.transfer_error,
-        "Между своими счетами",
-        "UA 85 399622 0000026205500011673",
-        "Ошибка перевода",
-        "-57 870.00 UAH"
+        icon = R.drawable.transfer_error,
+        title = "Между своими счетами",
+        iban = "UA 85 399622 0000026205500011673",
+        attention = "Ошибка перевода",
+        sum = "-57 870.00 UAH"
     ),
     TransactionItemDto(
-        false,
-        R.drawable.swift_error,
-        "SWIFT - платёж",
-        "UA 85 399622 0000026205500011673",
-        "Ошибка перевода",
-        "-100.00 UAH"
+        icon = R.drawable.swift_error,
+        title = "SWIFT - платёж",
+        iban = "UA 85 399622 0000026205500011673",
+        attention = "Ошибка перевода",
+        sum = "-100.00 UAH"
     ),
     TransactionItemDto(
-        false,
-        R.drawable.transfer_error,
-        "Между своими счетами",
-        "UA 85 399622 0000026205500011673",
-        "Ошибка перевода",
-        "-57 870.00 UAH"
+        icon = R.drawable.transfer_error,
+        title = "Между своими счетами",
+        iban = "UA 85 399622 0000026205500011673",
+        attention = "Ошибка перевода",
+        sum = "-57 870.00 UAH"
     ),
     TransactionItemDto(
-        false,
-        R.drawable.uk_territory,
-        "Платежи по Украине",
-        "UA 85 399622 0000026205500011673",
-        "",
-        "-57 870.00 UAH"
+        icon = R.drawable.uk_territory,
+        title = "Платежи по Украине",
+        iban = "UA 85 399622 0000026205500011673",
+        attention = "",
+        sum = "-57 870.00 UAH"
     )
 )
