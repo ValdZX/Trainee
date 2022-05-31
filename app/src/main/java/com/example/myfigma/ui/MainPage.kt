@@ -92,7 +92,7 @@ fun ScreenContent(
             }
         }
         stickyHeader {
-            SearchHeader()
+            SearchHeader(state, dispatch)
             ShowDivider()
         }
         val transactions = state.transactions

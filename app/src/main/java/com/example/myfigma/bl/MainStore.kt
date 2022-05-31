@@ -17,11 +17,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 data class MainState(
+    val cards: List<Card>,
     val transactions: List<TransactionItemDto>,
-    val cards: List<Card>
+    val searchText: String = ""
 ) : State
 
 sealed class MainAction : Action {
+    data class SearchTextChanged(val searchText: String) : MainAction()
     object OpenMenu : MainAction()
     object OpenMessages : MainAction()
 }
@@ -57,6 +59,9 @@ class MainStore : Store<MainState, MainAction, MainSideEffect>,
             MainAction.OpenMessages -> {
                 launch { sideEffect.emit(MainSideEffect.ShowTodoToast) }
                 oldState
+            }
+            is MainAction.SearchTextChanged -> {
+                oldState.copy(searchText = action.searchText)
             }
         }
         if (newState != oldState) {
